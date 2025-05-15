@@ -1,0 +1,77 @@
+import {
+  FaThLarge,
+  FaUniversity,
+  FaPhoneAlt,
+  FaCalculator,
+  FaShoppingCart,
+  FaChartLine,
+  FaEnvelope,
+  FaQuestionCircle,
+} from "react-icons/fa";
+import { MdAdminPanelSettings } from "react-icons/md";
+
+export const defaultTabs = [
+  {
+    id: "dashboard",
+    title: "Dashboard",
+    url: "/",
+    pinned: false,
+    icon: FaThLarge,
+  },
+  {
+    id: "banking",
+    title: "Banking",
+    url: "/banking",
+    pinned: false,
+    icon: FaUniversity,
+  },
+  {
+    id: "telefonie",
+    title: "Telefonie",
+    url: "/telefonie",
+    pinned: false,
+    icon: FaPhoneAlt,
+  },
+  {
+    id: "accounting",
+    title: "Accounting",
+    url: "/accounting",
+    pinned: false,
+    icon: FaCalculator,
+  },
+  {
+    id: "verkauf",
+    title: "Verkauf",
+    url: "/verkauf",
+    pinned: false,
+    icon: FaShoppingCart,
+  },
+  {
+    id: "statistik",
+    title: "Statistik",
+    url: "/statistik",
+    pinned: false,
+    icon: FaChartLine,
+  },
+  {
+    id: "postoffice",
+    title: "Post Office",
+    url: "/post-office",
+    pinned: false,
+    icon: FaEnvelope,
+  },
+  {
+    id: "admin",
+    title: "Administration",
+    url: "/admin",
+    pinned: false,
+    icon: MdAdminPanelSettings,
+  },
+  {
+    id: "help",
+    title: "Help",
+    url: "/help",
+    pinned: false,
+    icon: FaQuestionCircle,
+  },
+];
