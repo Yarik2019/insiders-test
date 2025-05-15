@@ -1,4 +1,6 @@
+import TabsContainer from "../TabsContainer/TabsContainer";
+
 const Header = () => {
-  return <div className="h-10 w-full bg-amber-300 text-center">Header</div>;
+  return <TabsContainer />;
 };
 export default Header;

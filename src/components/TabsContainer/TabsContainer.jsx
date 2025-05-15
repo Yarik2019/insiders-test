@@ -6,16 +6,20 @@ import {
   SortableContext,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { motion, AnimatePresence } from "framer-motion";
+
 import SortableTab from "../SortableTab/SortableTab";
 import { defaultTabs } from "../../utils/data";
+
 import { usePersistedTabs } from "../../hooks/usePersistedTabs";
 import { useActiveTab } from "../../hooks/useActiveTab";
 import { useTabsOverflow } from "../../hooks/useTabsOverflow";
-import { MoreHorizontal } from "lucide-react";
+import { Menu, X, MoreHorizontal } from "lucide-react";
 
 const TabsContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [overflowOpen, setOverflowOpen] = useState(false);
 
   const [tabs, setTabs] = usePersistedTabs(defaultTabs, location.pathname);
@@ -25,6 +29,7 @@ const TabsContainer = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab.id);
     navigate(tab.url);
+    setMenuOpen(false);
     setOverflowOpen(false);
   };
 
@@ -56,8 +61,8 @@ const TabsContainer = () => {
 
   return (
     <div className="relative bg-white z-10">
-      {/* Desktop Tabs only */}
-      <div ref={containerRef} className="flex items-center">
+      {/* Desktop Tabs */}
+      <div ref={containerRef} className="hidden md:flex items-center">
         <DndContext
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
@@ -111,6 +116,43 @@ const TabsContainer = () => {
           </div>
         )}
       </div>
+
+      {/* Mobile Burger */}
+      <div className="flex md:hidden items-center justify-between px-4 py-2 bg-white z-20">
+        <span className="font-semibold text-gray-700 text-lg">Tabs</span>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="p-2 rounded hover:bg-gray-100"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.ul
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden relative bg-white shadow-sm z-40 overflow-hidden"
+          >
+            {tabs.map((tab) => (
+              <li
+                key={tab.id}
+                onClick={() => handleTabClick(tab)}
+                className={` px-4 py-3 text-sm cursor-pointer hover:bg-gray-100 ${
+                  tab.id === activeTab ? "bg-gray-200 font-semibold" : ""
+                }`}
+              >
+                <span>{tab.title}</span>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

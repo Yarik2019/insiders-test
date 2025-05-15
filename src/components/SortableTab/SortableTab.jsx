@@ -33,14 +33,18 @@ const SortableTab = ({ tab, activeTab, onClick, onPin }) => {
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
-      onClick={() => onClick(tab)}
       className={`flex items-center border cursor-pointer select-none ${
         activeTab === tab.id ? "bg-blue-100 border-blue-400" : "bg-white"
       } ${isDragging ? "scale-105" : ""}`}
+      // тут ТІЛЬКИ onClick для активування табу
+      onClick={() => onClick(tab)}
     >
+      {/* Основний контент табу */}
       <div
-        className={`flex items-center gap-2.5 px-3 py-3 transition-all duration-300 ${
+        {...listeners}
+        onClick={(e) => e.stopPropagation()}
+        title="Drag tab"
+        className={`flex items-center gap-2.5 px-3 py-3 transition-all duration-300 flex-grow ${
           isDragging ? "text-white" : "text-gray-700 hover:text-black"
         }`}
       >
@@ -48,6 +52,7 @@ const SortableTab = ({ tab, activeTab, onClick, onPin }) => {
         <span>{tab.title}</span>
       </div>
 
+      {/* Кнопка pin - клікабельна і не блокується drag */}
       <button
         onClick={(e) => {
           e.stopPropagation();
