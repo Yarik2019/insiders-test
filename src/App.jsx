@@ -19,9 +19,7 @@ const AdministrationPage = lazy(() =>
 );
 const HelpPage = lazy(() => import("./pages/HelpPage/HelpPage"));
 
-const DummyPage = ({ title }) => (
-  <div className="p-4 text-xl font-bold">{title}</div>
-);
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 function App() {
   return (
@@ -39,7 +37,7 @@ function App() {
             <Route path="admin" element={<AdministrationPage />} />
             <Route path="help" element={<HelpPage />} />
           </Route>
-          <Route path="*" element={<DummyPage title="Page Not Found" />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </>

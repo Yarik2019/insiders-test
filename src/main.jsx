@@ -9,7 +9,3 @@ createRoot(document.getElementById("root")).render(
     <App />
   </BrowserRouter>
 );
-
-//  <Provider store={store}>
-//     <PersistGate loading={null} persistor={persistor}></PersistGate>
-//   </Provider>
