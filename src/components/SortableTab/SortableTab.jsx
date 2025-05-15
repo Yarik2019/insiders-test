@@ -1,10 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-// const TabIcon = ({ Icon }) => (
-//   <Icon className="w-4 h-4 text-gray hover:text-black  transition-all duration-300" />
-// );
-
 const SortableTab = ({ tab, activeTab, onClick, onPin }) => {
   const {
     attributes,
@@ -18,9 +14,8 @@ const SortableTab = ({ tab, activeTab, onClick, onPin }) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    zIndex: isDragging ? 50 : "auto", // на верх при перетягуванні
-    boxShadow: isDragging ? "0 4px 12px rgba(0, 0, 0, 0.15)" : "none", // додаємо тінь при перетягуванні
-    // opacity: isDragging ? 0.8 : 1, // трохи прозорий
+    zIndex: isDragging ? 50 : "auto",
+    boxShadow: isDragging ? "0 4px 12px rgba(0, 0, 0, 0.15)" : "none",
     backgroundColor: isDragging
       ? "#7F858D"
       : activeTab === tab.id
@@ -40,27 +35,26 @@ const SortableTab = ({ tab, activeTab, onClick, onPin }) => {
       {...attributes}
       {...listeners}
       onClick={() => onClick(tab)}
-      className={`flex items-center gap-2 px-4 py-2 rounded border cursor-pointer select-none ${
+      className={`flex items-center border cursor-pointer select-none ${
         activeTab === tab.id ? "bg-blue-100 border-blue-400" : "bg-white"
       } ${isDragging ? "scale-105" : ""}`}
     >
       <div
-        className={`flex items-center gap-2.5  transition-all duration-300 ${
-          isDragging ? "text-white" : "text-gray hover:text-black"
+        className={`flex items-center gap-2.5 px-3 py-3 transition-all duration-300 ${
+          isDragging ? "text-white" : "text-gray-700 hover:text-black"
         }`}
       >
-        {tab.icon && <tab.icon className={`w-4 h-4  `} />}
+        {tab.icon && <tab.icon className="w-4 h-4" />}
         <span>{tab.title}</span>
       </div>
 
-      {/* Pin */}
       <button
         onClick={(e) => {
           e.stopPropagation();
           onPin(tab.id);
         }}
         title="Pin"
-        className="text-gray-500 hover:text-blue-600"
+        className="text-gray-500 hover:text-blue-600 px-2"
       >
         {tab.pinned ? "📌" : "📍"}
       </button>

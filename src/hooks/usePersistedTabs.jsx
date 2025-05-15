@@ -1,20 +1,31 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { iconMap } from "../utils/iconMap";
+import { defaultTabs } from "../utils/data";
 
-const LOCAL_STORAGE_KEY = "tabsState";
+export function usePersistedTabs() {
+  const [tabs, setTabs] = useState(() => {
+    const stored = JSON.parse(localStorage.getItem("tabs"));
+    if (stored?.length) {
+      return stored.map((tab) => ({
+        ...tab,
+        icon: iconMap[tab.icon] || iconMap.FaQuestionCircle,
+        iconName: tab.icon,
+      }));
+    }
 
-export function usePersistedTabs(defaultTabs, locationPathname) {
-  const [tabs, setTabs] = useState([]);
-  console.log(locationPathname);
+    return defaultTabs.map((tab) => ({
+      ...tab,
+      icon: iconMap[tab.icon],
+      iconName: tab.icon,
+    }));
+  });
 
-  // Завантаження табів з localStorage або дефолтних при ініціалізації
   useEffect(() => {
-    const savedTabs = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-    setTabs(savedTabs || defaultTabs);
-  }, [defaultTabs]);
-
-  // Збереження табів у localStorage при зміні tabs
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tabs));
+    const tabsToStore = tabs.map(({ iconName, ...rest }) => ({
+      ...rest,
+      icon: iconName,
+    }));
+    localStorage.setItem("tabs", JSON.stringify(tabsToStore));
   }, [tabs]);
 
   return [tabs, setTabs];
