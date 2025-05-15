@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
@@ -13,12 +13,12 @@ import { defaultTabs } from "../../utils/data";
 import { usePersistedTabs } from "../../hooks/usePersistedTabs";
 import { useActiveTab } from "../../hooks/useActiveTab";
 import { useTabsOverflow } from "../../hooks/useTabsOverflow";
-// import { Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const TabsContainer = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [tabs, setTabs] = usePersistedTabs(defaultTabs, location.pathname);
   const [activeTab, setActiveTab] = useActiveTab(tabs, location.pathname);
@@ -27,7 +27,7 @@ const TabsContainer = () => {
   const handleTabClick = (tab) => {
     setActiveTab(tab.id);
     navigate(tab.url);
-    // setMenuOpen(false);
+    setMenuOpen(false);
   };
 
   const handlePin = (id) => {
@@ -105,7 +105,7 @@ const TabsContainer = () => {
       </div>
 
       {/* Mobile Burger */}
-      {/* <div className="flex md:hidden items-center justify-between px-4 py-2 border-b bg-white">
+      <div className="flex md:hidden items-center justify-between px-4 py-2 border-b bg-white">
         <span className="font-semibold text-gray-700 text-lg">Tabs</span>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -113,10 +113,10 @@ const TabsContainer = () => {
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
-      </div> */}
+      </div>
 
       {/* Mobile Menu List */}
-      {/* {menuOpen && (
+      {menuOpen && (
         <div className="md:hidden border-t bg-white shadow-sm">
           {tabs.map((tab) => (
             <div
@@ -130,7 +130,7 @@ const TabsContainer = () => {
             </div>
           ))}
         </div>
-      )} */}
+      )}
     </div>
   );
 };
